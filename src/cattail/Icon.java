@@ -2,7 +2,7 @@ package cattail;
 
 import java.awt.*;
 
-public enum Icons {
+public enum Icon {
     ZERO,
     NUM1,
     NUM2,
