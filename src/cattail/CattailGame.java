@@ -1,21 +1,19 @@
 package cattail;
 
 public class CattailGame {
-    Minefield minefield;
+    private Minefield minefield;
 
-    public CattailGame() {
+    public CattailGame(int columns, int rows) {
         minefield = Minefield.getInstance();
+        minefield.setWidth(columns);
+        minefield.setHeight(rows);
     }
 
-    public void start(int width, int height) {
-        minefield.setWidth(width);
-        minefield.setHeight(height);
-        minefield.setDefaultIcon(Icon.CLOSED);
-        minefield.setMatrix();
-        minefield.setIconByCoords(0, 0, Icon.STEPPED);
+    public void start(int tails) {
+        minefield.createTail(tails);
     }
 
-    public Icon getIcon(int x, int y) {
-        return minefield.getIconByCoords(x, y);
+    public Minefield getMinefield() {
+        return minefield;
     }
 }

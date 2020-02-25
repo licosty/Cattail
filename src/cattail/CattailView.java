@@ -10,10 +10,11 @@ public class CattailView extends JPanel {
     private final int COLUMNS = 9;
     private final int ROWS = 9;
     private final int ICON_SIZE = 50;
+    private final int TAILS = 10;
 
     public CattailView() {
-        game = new CattailGame();
-        game.start(COLUMNS, ROWS);
+        game = new CattailGame(COLUMNS, ROWS);
+        game.start(TAILS);
         setIcons();
         initFrame();
     }
@@ -36,7 +37,7 @@ public class CattailView extends JPanel {
         super.paintComponent(g);
         for (int y = 0; y < ROWS; y++) {
             for (int x = 0; x < COLUMNS; x++) {
-                g.drawImage(game.getIcon(x, y).icon, x * ICON_SIZE, y * ICON_SIZE, this);
+                g.drawImage(game.getMinefield().getIcon(x, y).icon, x * ICON_SIZE, y * ICON_SIZE, this);
             }
         }
     }
