@@ -37,7 +37,9 @@ public class CattailView extends JPanel {
         super.paintComponent(g);
         for (int y = 0; y < ROWS; y++) {
             for (int x = 0; x < COLUMNS; x++) {
-                g.drawImage(game.getMinefield().getIcon(x, y).icon, x * ICON_SIZE, y * ICON_SIZE, this);
+                g.drawImage(game.getMinefield().getIcon(x, y).icon,
+                            x * ICON_SIZE,
+                            y * ICON_SIZE, this);
             }
         }
     }

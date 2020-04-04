@@ -14,15 +14,24 @@ class Tail {
     }
 
     private void placeTail() {
-        int[] coord = Minefield.getInstance().getRandomCoord();
-        int x = coord[0];
-        int y = coord[1];
 
-        tails.setIconByCoords(x, y, Icon.TAIL);
+        while (true) {
+            int[] coord = Minefield.getInstance().getRandomCoord();
+            if (Icon.TAIL == tails.getIconByCoords(coord[0], coord[1]))
+                continue;
 
-        for (int[] array : Minefield.getInstance().getCoordsAround(x, y)) {
-            tails.setIconByCoords(array[0], array[1], Icon.NUM1);
+            tails.setIconByCoords(coord[0], coord[1], Icon.TAIL);
+
+            for (int[] array : Minefield.getInstance().getCoordsAround(coord[0], coord[1])) {
+                if (Icon.TAIL != tails.getIconByCoords(array[0], array[1])) {
+                    tails.setIconByCoords(
+                            array[0], array[1],
+                            tails.getIconByCoords(array[0], array[1]).getNextIcon());
+                }
+            }
+            break;
         }
+
     }
 
     Icon getTailByCoords(int x, int y) {

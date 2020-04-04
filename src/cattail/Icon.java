@@ -7,11 +7,20 @@ public enum Icon {
     NUM1,
     NUM2,
     NUM3,
+    NUM4,
+    NUM5,
+    NUM6,
+    NUM7,
+    NUM8,
     CLOSED,
     TAIL,
     STEPPED,
-    FLAGED,
+    FLAGGED,
     INFORM;
 
     public Image icon;
+
+    public Icon getNextIcon() {
+        return Icon.values()[this.ordinal() + 1];
+    }
 }

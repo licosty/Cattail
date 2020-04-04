@@ -22,6 +22,7 @@ public class Matrix {
     }
 
     public void setIconByCoords(int x, int y, Icon icon) {
-        matrix[x][y] = icon;
+        if (minefield.isNotBound(x, y))
+            matrix[x][y] = icon;
     }
 }
