@@ -2,12 +2,14 @@ package cattail;
 
 class Tail {
     private Matrix tails;
-    private int amountTails;
+    private final int amountTails;
 
     public Tail(int amountTails) {
         this.amountTails = amountTails;
-        tails = new Matrix(Icon.ZERO);
+    }
 
+    void placeTails() {
+        tails = new Matrix(Icon.ZERO);
         for (int i = 0; i < amountTails; i++) {
             placeTail();
         }
@@ -31,10 +33,13 @@ class Tail {
             }
             break;
         }
-
     }
 
     Icon getTailByCoords(int x, int y) {
         return tails.getIconByCoords(x, y);
+    }
+
+    public int getAmountTails() {
+        return amountTails;
     }
 }

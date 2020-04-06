@@ -2,6 +2,7 @@ package cattail;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class CattailView extends JPanel {
     private JFrame frame;
@@ -13,8 +14,8 @@ public class CattailView extends JPanel {
     private final int TAILS = 10;
 
     public CattailView() {
-        game = new CattailGame(COLUMNS, ROWS);
-        game.start(TAILS);
+        game = new CattailGame(COLUMNS, ROWS, TAILS);
+        game.start();
         setIcons();
         initFrame();
     }
@@ -27,9 +28,65 @@ public class CattailView extends JPanel {
                 Minefield.getInstance().getWidth() * ICON_SIZE,
                 Minefield.getInstance().getHeight() * ICON_SIZE));
         frame.add(this);
+        frame.setResizable(false);
         frame.setVisible(true);
-        frame.setIconImage(getIcon("tail"));
+        frame.setIconImage(getIcon("cattail-icon"));
         frame.pack();
+        frame.setLocationRelativeTo(null);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / ICON_SIZE;
+                int y = e.getY() / ICON_SIZE;
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    game.pressLeftButton(x, y);
+                }
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    game.pressRightButton(x, y);
+                }
+                repaint();
+                if (game.gameOver()) {
+                    JDialog jDialog = createDialog("Cattail", true);
+
+                    jDialog.setVisible(true);
+                }
+            }
+        });
+    }
+
+    private JDialog createDialog(String cattail, boolean modal) {
+        JDialog jDialog = new JDialog(frame, cattail, modal);
+        jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog.setMinimumSize(new Dimension(180, 90));
+
+        JPanel label = createLabel();
+        JPanel button = createButton(jDialog);
+        jDialog.add(label, BorderLayout.NORTH);
+        jDialog.add(button, BorderLayout.SOUTH);
+
+        jDialog.pack();
+        jDialog.setLocationRelativeTo(null);
+        return jDialog;
+    }
+
+    private JPanel createLabel() {
+        JLabel label = new JLabel(game.getMessage());
+        JPanel panel = new JPanel();
+        panel.add(label);
+        return panel;
+    }
+
+    private JPanel createButton(JDialog jDialog) {
+        JPanel panel = new JPanel();
+        JButton ok = new JButton("ok");
+        ok.addActionListener(e -> {
+            game.pressLeftButton(1, 1);
+            frame.repaint();
+            jDialog.setVisible(false);
+        });
+        panel.add(ok);
+        return panel;
     }
 
     @Override

@@ -5,12 +5,14 @@ import java.util.Random;
 
 class Minefield {
     private static Minefield instance;
+    private Matrix upperLayer;
     private Tail tail;
 
     private int height;
     private int width;
 
     private static Random random = new Random();
+    private int countFlags;
 
     private Minefield() {
     }
@@ -19,6 +21,12 @@ class Minefield {
         if (instance == null)
             instance = new Minefield();
         return instance;
+    }
+
+    Matrix initUpperLayer() {
+        upperLayer = new Matrix(Icon.CLOSED);
+        countFlags = width * height;
+        return upperLayer;
     }
 
     public boolean isNotBound(int x, int y) {
@@ -34,8 +42,9 @@ class Minefield {
         return coord;
     }
 
-    public void createTail(int tails) {
+    public Tail createTail(int tails) {
         tail = new Tail(tails);
+        return tail;
     }
 
     ArrayList<int[]> getCoordsAround(int coordX, int coordY) {
@@ -45,7 +54,6 @@ class Minefield {
                 if (isNotBound(x, y)) {
                     if (x != coordX || y != coordY)
                         list.add(new int[]{x, y});
-
                 }
             }
         }
@@ -53,7 +61,9 @@ class Minefield {
     }
 
     public Icon getIcon(int x, int y) {
-        return tail.getTailByCoords(x, y);
+        if (upperLayer.getIconByCoords(x, y) == Icon.OPENED)
+            return tail.getTailByCoords(x, y);
+        return upperLayer.getIconByCoords(x, y);
     }
 
     public int getHeight() {
@@ -70,5 +80,13 @@ class Minefield {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public int getCountFlags() {
+        return countFlags;
+    }
+
+    public void countFlagsDecrement() {
+        countFlags--;
     }
 }

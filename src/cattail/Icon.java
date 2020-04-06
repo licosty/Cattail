@@ -12,11 +12,12 @@ public enum Icon {
     NUM6,
     NUM7,
     NUM8,
-    CLOSED,
     TAIL,
-    STEPPED,
+    OPENED,
+    CLOSED,
     FLAGGED,
-    INFORM;
+    STEPPED,
+    NOTAIL;
 
     public Image icon;
 
