@@ -2,10 +2,12 @@ package cattail;
 
 class Tail {
     private Matrix tails;
-    private final int amountTails;
+    private int amountTails;
+    private int[] firstStep;
 
     public Tail(int amountTails) {
         this.amountTails = amountTails;
+        firstStep = new int[]{-1, -1};
     }
 
     void placeTails() {
@@ -19,6 +21,8 @@ class Tail {
 
         while (true) {
             int[] coord = Minefield.getInstance().getRandomCoord();
+            if (coord[0] == firstStep[0] && coord[1] == firstStep[1])
+                continue;
             if (Icon.TAIL == tails.getIconByCoords(coord[0], coord[1]))
                 continue;
 
@@ -41,5 +45,14 @@ class Tail {
 
     public int getAmountTails() {
         return amountTails;
+    }
+
+    public boolean isFirstStep() {
+        return firstStep[0] == -1 && firstStep[1] == -1;
+    }
+
+    public void setFirstStep(int x, int y) {
+        firstStep[0] = x;
+        firstStep[1] = y;
     }
 }

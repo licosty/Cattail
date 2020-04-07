@@ -18,6 +18,7 @@ public class CattailGame {
         tail.placeTails();
         upperLayer = minefield.initUpperLayer();
         gameOver = false;
+        tail.setFirstStep(-1, -1);
     }
 
     public Minefield getMinefield() {
@@ -28,6 +29,12 @@ public class CattailGame {
         if (gameOver) {
             start();
             return;
+        }
+        if (tail.isFirstStep()) {
+            tail.setFirstStep(x, y);
+            if (tail.getTailByCoords(x, y) == Icon.TAIL) {
+                start();
+            }
         }
         setOpened(x, y);
         checkWinner();
