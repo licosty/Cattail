@@ -33,7 +33,7 @@ public class CattailGame {
         if (tail.isFirstStep()) {
             tail.setFirstStep(x, y);
             if (tail.getTailByCoords(x, y) == Icon.TAIL) {
-                start();
+                tail.placeTails();
             }
         }
         setOpened(x, y);
